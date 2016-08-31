@@ -9,8 +9,14 @@ gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.0'
 gem 'bcrypt'
 gem 'jwt'
-gem 'faker', '1.1.2'
+gem 'faker'
 gem 'pushmeup'
+gem 'httparty'
+gem 'tzinfo'
+gem 'tzinfo-data'
+#allows separately pushing secrets.yml to heroku so it stays out of git
+# gem 'heroku_secrets'
+
 
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -37,7 +43,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'simplecov', :require => false
-
+  gem 'timecop'
 end
 
 group :development do

@@ -1,7 +1,10 @@
 class Patient < ApplicationRecord
-  has_many :appointments, dependent: :destroy
+  has_many :appointments
   has_and_belongs_to_many :clinics
   has_many :devices
+
+  enum marital_status: [ :single, :married, :divorced, :widowed, :other]
+  enum sex: [ :male, :female ]
 
   has_secure_password
 

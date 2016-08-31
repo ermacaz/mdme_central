@@ -154,8 +154,11 @@ GEM
       sprockets (>= 3.0.0)
     thor (0.19.1)
     thread_safe (0.3.5)
+    timecop (0.8.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    tzinfo-data (1.2016.6)
+      tzinfo (>= 1.0.0)
     uniform_notifier (1.10.0)
     websocket-driver (0.6.4)
       websocket-extensions (>= 0.1.0)
@@ -170,7 +173,8 @@ DEPENDENCIES
   byebug
   database_cleaner
   factory_girl_rails
-  faker (= 1.1.2)
+  faker
+  httparty
   jwt
   listen (~> 3.0.5)
   pg (~> 0.18)
@@ -181,6 +185,8 @@ DEPENDENCIES
   simplecov
   spring
   spring-watcher-listen (~> 2.0.0)
+  timecop
+  tzinfo
   tzinfo-data
 
 BUNDLED WITH
