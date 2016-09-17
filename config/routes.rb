@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   resources :devices
   resources :doctors
-  resources :clinics
+  resources :clinics do
+    resources :appointments, controller: 'clinics/appointments'
+  end
   resources :patients
   resources :appointments
   resources :logins, :only=>[:create, :destroy]

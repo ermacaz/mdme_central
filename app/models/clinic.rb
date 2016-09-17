@@ -2,8 +2,8 @@ class Clinic < ApplicationRecord
 
   has_many :clinic_procedures
   has_many :appointments
-  has_many :patients
-  has_many :doctors
+  has_and_belongs_to_many :patients
+  has_and_belongs_to_many :doctors
 
   validates :name, presence: true, uniqueness: {scope: :address}
   validates :address, presence: true
@@ -37,5 +37,4 @@ class Clinic < ApplicationRecord
     response = HTTParty.get url
     response.body
   end
-
 end
