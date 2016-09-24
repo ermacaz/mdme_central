@@ -2,7 +2,12 @@
 require 'capistrano/setup'
 require 'capistrano/deploy'
 
-require 'capistrano/rails'
+# rails includes asset compilingw hich crashes on api mode
+# require 'capistrano/rails'
+require 'capistrano/bundler'
+# require 'capistrano/rails/assets'
+require 'capistrano/rails/migrations'
+
 require 'capistrano/bundler'
 require 'capistrano/rvm'
 require 'capistrano/puma'

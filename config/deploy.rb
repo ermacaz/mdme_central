@@ -1,5 +1,5 @@
 # Change these
-server '8.8.8.9', port: 3001, roles: [:web, :app, :db], primary: true
+server '8.8.8.9', roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:ermacaz/mdme_central.git'
 set :application,     'mdme_central'
@@ -74,7 +74,7 @@ namespace :deploy do
   end
 
   before :starting,     :check_revision
-  after  :finishing,    :compile_assets
+  # after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
   after  :finishing,    :restart
 end
