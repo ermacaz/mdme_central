@@ -78,8 +78,8 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
-production:
-  <<: *default
-  database: mdme_central_production
-  username: mdme_central
-  password: <%= ENV['MDME_CENTRAL_DATABASE_PASSWORD'] %>
+#production:
+#  <<: *default
+#  database: mdme_central_production
+#  username: mdme_central
+#  password: <%= ENV['MDME_CENTRAL_DATABASE_PASSWORD'] %>

@@ -5,18 +5,18 @@ class LoginsController < ApplicationController
       token = AuthToken.issue_token({user_id: patient.id, user_type: 'Patient', start_time: Time.zone.now.to_i})
       clinics_json = [].as_json
       patient.update_attributes!(api_key: token)
-      if params[:clinic_update_time].present?
+      if params[:latest_update_time].present?
         begin
-          clinic_update_time = Time.zone.parse(params[:clinic_update_time])
+          clinic_update_time = Time.zone.parse(params[:latest_update_time])
           #have to compare string form, as objects they dont handle comparison well
           unless clinic_update_time.to_s == Clinic.all.order("updated_at DESC").first.updated_at.to_s
-            clinics_json = patient.clinics.where("updated_at > ? ", clinic_update_time).as_json(except:[:created_at], :methods=>[:address_for_mobile])
+            clinics_json = patient.clinics.where("updated_at > ? ", clinic_update_time).as_json(include: {clinic_procedures: {only: [:description, :duration], methods: :name}}, except:[:created_at], :methods=>[:address_for_mobile])
           end
         rescue
-          clinics_json = patient.clinics.as_json(except:[:created_at])
+          clinics_json = patient.clinics.as_json(include: {clinic_procedures: {only: [:description, :duration, :id], methods: :name}}, except:[:created_at])
         end
       else
-        clinics_json = patient.clinics.as_json(except:[:created_at])
+        clinics_json = patient.clinics.as_json(include: {clinic_procedures: {only: [:description, :duration, :id], methods: :name}}, except:[:created_at])
       end
       render json: {
         success: true,

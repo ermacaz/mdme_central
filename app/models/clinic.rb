@@ -10,6 +10,7 @@ class Clinic < ApplicationRecord
 
 
   after_create :set_location_coordinates
+  after_create :create_default_clinic_procedure
   after_save   :set_location_coordinates, if: ->(clinic){ clinic.address_changed? or
                                                            clinic.city_changed?    or
                                                            clinic.state_changed?   or
@@ -36,5 +37,15 @@ class Clinic < ApplicationRecord
     address}&key=#{ENV['GOOGLE_API_KEY']}"
     response = HTTParty.get url
     response.body
+  end
+
+  def create_default_clinic_procedure
+    procedure = Procedure.find_by_name('Other')
+    if self.default_duration.present?
+      duration = self.default_duration
+    else
+      duration = procedure.duration
+    end
+    ClinicProcedure.create!(clinic_id: self.id, procedure_id: procedure.id, description: 'Other', duration: duration)
   end
 end

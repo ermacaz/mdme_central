@@ -3,6 +3,8 @@ namespace :db do
   task populate: :environment do
     Rake::Task["db:schema:load"].invoke
     puts 'Creating Clinics'
+    #moved here as clinic after_save depends on this existing
+    p3 = Procedure.create!(:name=>'Other', :description=>'Other', :duration=>20)
     clinic1 = c1 = Clinic.create!(name: 'MGH',
                        address: '55 Fruit Street|9th floor',
                        city:     'Boston',
@@ -25,7 +27,8 @@ namespace :db do
                        thursday_open_time: '8:00 AM',
                        thursday_close_time: '4:00 PM',
                        friday_open_time: '8:00 AM',
-                       friday_close_time: '4:00 PM')
+                       friday_close_time: '4:00 PM',
+                       default_duration: 20)
 
     3.times do |n|
       c = Clinic.create!(name: 'MGH',
@@ -50,7 +53,8 @@ namespace :db do
                          thursday_open_time: '8:00 AM',
                          thursday_close_time: '4:00 PM',
                          friday_open_time: '8:00 AM',
-                         friday_close_time: '4:00 PM')
+                         friday_close_time: '4:00 PM',
+                         default_duration: 20)
 
     end
     puts 'Creating first patient'
@@ -97,7 +101,6 @@ namespace :db do
     p2 = Procedure.create!(:name=>'Rash/Skin allergy', :description=>'Rash on body', :duration=>20)
     p2.symptoms << rash
     p2.symptoms << allergies
-    p3 = Procedure.create!(:name=>'Other', :description=>'Other', :duration=>20)
     p3.symptoms << ot
     p4 = Procedure.create!(:name=>'Pelvic exam', :description=>'Pelvic exam', :duration=>45)
     p5 = Procedure.create!(:name=>'Allergy checkup', :description=>'Test for new or treat existing allergies', :duration=>30)

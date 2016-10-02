@@ -26,7 +26,7 @@ class Clinics::AppointmentsController < ApplicationController
     render json: {
         success: true,
         info: '',
-        data: @appointments.map {|a| a.send(format)}
+        data: {appointments: @appointments.map {|a| a.send(format)}}
     }
   end
 end
