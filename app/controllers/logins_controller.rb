@@ -10,13 +10,13 @@ class LoginsController < ApplicationController
           clinic_update_time = Time.zone.parse(params[:latest_update_time])
           #have to compare string form, as objects they dont handle comparison well
           unless clinic_update_time.to_s == Clinic.all.order("updated_at DESC").first.updated_at.to_s
-            clinics_json = patient.clinics.where("updated_at > ? ", clinic_update_time).as_json(include: {clinic_procedures: {only: [:description, :duration], methods: :name}}, except:[:created_at], :methods=>[:address_for_mobile])
+            clinics_json = patient.clinics.where("updated_at > ? ", clinic_update_time).as_json(include: {clinic_procedures: {only: [:updated_at, :description, :duration], methods: :name}}, except:[:created_at], :methods=>[:address_for_mobile])
           end
         rescue
-          clinics_json = patient.clinics.as_json(include: {clinic_procedures: {only: [:description, :duration, :id], methods: :name}}, except:[:created_at])
+          clinics_json = patient.clinics.as_json(include: {clinic_procedures: {only: [:updated_at, :description, :duration, :id], methods: :name}}, except:[:created_at])
         end
       else
-        clinics_json = patient.clinics.as_json(include: {clinic_procedures: {only: [:description, :duration, :id], methods: :name}}, except:[:created_at])
+        clinics_json = patient.clinics.as_json(include: {clinic_procedures: {only: [:updated_at, :description, :duration, :id], methods: :name}}, except:[:created_at])
       end
       render json: {
         success: true,
