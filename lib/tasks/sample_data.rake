@@ -196,7 +196,7 @@ namespace :db do
   end
 
   task populate_appointments: :environment do
-    puts 'Creating 80 appointments over next 10 days'
+    puts 'Creating 80 appointments over next 15 days'
     #sample appointments
     100.times do |n|
       patient_id = Patient.all.sample.id
@@ -205,7 +205,7 @@ namespace :db do
 
       invalid = true
       while invalid
-        appointment_time = rand_time_with_intervals(10.days.from_now)
+        appointment_time = rand_time_with_intervals(15.days.from_now)
         a = Appointment.new(clinic_id: clinic_procedure.clinic_id,
                                  doctor_id: doctor_id,
                                  patient_id: patient_id,
@@ -217,7 +217,7 @@ namespace :db do
           a.clinic_procedures << clinic_procedure
           invalid = false
         else
-          # puts [Appointment.all.count, a.errors.full_messages.inspect, a.start_time].inspect
+          puts [Appointment.all.count, a.errors.full_messages.inspect, a.start_time].inspect
         end
       end
     end
@@ -266,7 +266,7 @@ def rand_time_with_intervals(end_date, start_date=Time.zone.now + 40.minutes )
   start_date = start_date.to_datetime
   end_date = end_date.to_datetime
   appt_time = (start_date..end_date).to_a.sample
-  hour = (7..18).to_a.sample
+  hour = (8..18).to_a.sample
   min = (0..55).step(5).to_a.sample
   datetime = Time.zone.parse("#{appt_time.year}-#{appt_time.month}-#{appt_time.day} #{hour}:#{min}")
 end

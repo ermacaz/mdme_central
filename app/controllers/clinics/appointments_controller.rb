@@ -2,7 +2,7 @@ class Clinics::AppointmentsController < ApplicationController
   before_action :authenticate_header
   #return appointments for given date
   def index
-    @clinic = Clinic.find(params[:clinic_id])
+    @clinic = Clinic.includes(:appointments).find(params[:clinic_id])
     @appointments = @clinic.appointments
     if params[:date]
       begin
